@@ -7,7 +7,7 @@
     "build": "max build",
     "postinstall": "max setup",
     "setup": "max setup",
-    "remove-modules": "rd /s /q node_modules"
+    "preview": "max preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
