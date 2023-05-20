@@ -5,9 +5,9 @@
     "start": "npm run dev",
     "dev": "max dev",
     "build": "max build",
+    "preview": "max preview",
     "postinstall": "max setup",
-    "setup": "max setup",
-    "preview": "max preview"
+    "setup": "max setup"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
