@@ -1,5 +1,4 @@
 import { defineConfig } from "@umijs/max";
-import { theme } from "antd";
 
 export default defineConfig({
 	npmClient: "npm",
