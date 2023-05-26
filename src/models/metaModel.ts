@@ -1,3 +1,7 @@
+// @/src/models/metaModel.ts
+
+import { useEffect, useState } from "react";
+
 interface MetaProps {
 	/**
 	 * Properties of responsibility object
@@ -14,18 +18,14 @@ interface MetaProps {
 	previous: number[];
 }
 
-export default class Meta implements MetaProps {
-	id: number;
-	name: string;
-	description: string;
-	projectId: number;
-	previous: number[];
+const Meta = () => {
+	const [meta, setMeta] = useState<MetaProps | undefined>(undefined);
+	const [loading, setLoading] = useState<boolean>(true);
 
-	constructor(metaArgs: MetaProps) {
-		this.id = metaArgs.id;
-		this.name = metaArgs.name;
-		this.description = metaArgs.description;
-		this.projectId = metaArgs.projectId;
-		this.previous = metaArgs.previous;
-	}
-}
+	return {
+		meta,
+		loading,
+	};
+};
+
+export default Meta;
