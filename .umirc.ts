@@ -34,9 +34,9 @@ export default defineConfig({
 			component: "./Table",
 		},
 		{
-			name: "Liabilities",
-			path: "/liability",
-			component: "./Liability",
+			name: "Vendor",
+			path: "/vendor",
+			component: "./Vendor",
 		},
 	],
 });
