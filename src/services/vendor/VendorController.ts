@@ -1,21 +1,10 @@
 import { request } from "@umijs/max";
 
-export async function queryUserList(
-	params: {
-		// query
-		/** keyword */
-		keyword?: string;
-		/** current */
-		current?: number;
-		/** pageSize */
-		pageSize?: number;
-	},
-	options?: { [key: string]: any }
-) {
-	return request<API.Result_PageInfo_UserInfo__>("/api/v1/queryUserList", {
+export async function queryVendorList(options?: { [key: string]: any }) {
+	return request("https://middle.tracechain.top/vendor", {
 		method: "GET",
-		params: {
-			...params,
+		headers: {
+			"Content-Type": "application/json",
 		},
 		...(options || {}),
 	});

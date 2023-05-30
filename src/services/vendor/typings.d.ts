@@ -1,5 +1,5 @@
 declare namespace Vendor {
-	interface VendorInfo {
+	export interface VendorInfo {
 		/**
 		 * Properties of vendor object
 		 * @argument {number} id vendor id
@@ -14,11 +14,11 @@ declare namespace Vendor {
 		role: string;
 	}
 
-	interface VendorInfo_Request {
+	export interface VendorInfo_Request {
 		name: string;
 		description?: string;
 		role?: string;
 	}
 
-	type VendorInfo_Response = VendorInfo;
+	export type VendorInfo_Response = VendorInfo;
 }
