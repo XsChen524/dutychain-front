@@ -6,7 +6,9 @@ export default defineConfig({
 	access: {},
 	model: {},
 	initialState: {},
-	request: {},
+	request: {
+		dataField: "data",
+	},
 	layout: {
 		title: "@umijs/max",
 	},
