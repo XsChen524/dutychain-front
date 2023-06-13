@@ -1,8 +1,14 @@
 import { defineConfig } from "@umijs/max";
+import type { Locale } from "antd/es/locale";
+import enUS from "antd/locale/en_US";
 
 export default defineConfig({
 	npmClient: "npm",
-	antd: {},
+	antd: {
+		configProvider: {
+			locale: enUS,
+		},
+	},
 	access: {},
 	model: {},
 	initialState: {},
@@ -10,7 +16,7 @@ export default defineConfig({
 		dataField: "data",
 	},
 	layout: {
-		title: "@umijs/max",
+		title: "DutyChain",
 	},
 	history: {
 		type: "hash",
@@ -21,10 +27,11 @@ export default defineConfig({
 			redirect: "/home",
 		},
 		{
-			name: "首页",
+			name: "Home",
 			path: "/home",
 			component: "./Home",
 		},
+		/*
 		{
 			name: "权限演示",
 			path: "/access",
@@ -35,6 +42,7 @@ export default defineConfig({
 			path: "/table",
 			component: "./Table",
 		},
+		*/
 		{
 			name: "Vendor",
 			path: "/vendor",
