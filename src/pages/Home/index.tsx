@@ -1,5 +1,5 @@
-import Guide from '@/components/Guide';
 import styles from './index.less';
+import { Layout, Row, Typography } from 'antd';
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 
@@ -8,7 +8,13 @@ const HomePage: React.FC = () => {
 	return (
 		<PageContainer ghost>
 			<div className={styles.container}>
-				<Guide name={name} />
+				<Layout>
+					<Row>
+						<Typography.Title level={3} className={styles.title}>
+							Hello {name}!
+						</Typography.Title>
+					</Row>
+				</Layout>
 			</div>
 		</PageContainer>
 	);
