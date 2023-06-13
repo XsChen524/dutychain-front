@@ -1,5 +1,4 @@
 import { defineConfig } from "@umijs/max";
-import type { Locale } from "antd/es/locale";
 import enUS from "antd/locale/en_US";
 
 export default defineConfig({
@@ -47,6 +46,11 @@ export default defineConfig({
 			name: "Vendor",
 			path: "/vendor",
 			component: "./Vendor",
+		},
+		{
+			name: "Document",
+			path: "/document",
+			component: "./Document",
 		},
 	],
 });

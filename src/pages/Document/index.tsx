@@ -1,53 +1,52 @@
 import CreateForm from './components/CreateForm';
-import services from '@/services/vendor';
-import styles from './index.less';
+import services from '@/services/document';
 import { ActionType, PageContainer, ProDescriptionsItemProps, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { useRef, useState } from 'react';
 
-const { queryVendorList } = services.VendorController;
+const { queryDocList } = services.DocController;
 
-export default function Page() {
+const Page: React.FC = () => {
 	const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-	const [selectedRowsState, setSelectedRows] = useState<Vendor.VendorInfo[]>([]);
+	const [selectedRowsState, setSelectedRows] = useState<Doc.DocInfo[]>([]);
 	const actionRef = useRef<ActionType>();
-	const columns: ProDescriptionsItemProps<Vendor.VendorInfo>[] = [
+	const columns: ProDescriptionsItemProps<Doc.DocInfo>[] = [
 		{
-			title: 'Vendor Id',
+			title: 'ID',
 			dataIndex: 'id',
 			valueType: 'text',
 		},
 		{
-			title: 'Name',
-			dataIndex: 'name',
+			title: 'Title',
+			dataIndex: 'title',
 			valueType: 'text',
 		},
 		{
-			title: 'Description',
-			dataIndex: 'description',
+			title: 'Data',
+			dataIndex: 'data',
 			valueType: 'text',
 		},
 		{
-			title: 'Role',
-			dataIndex: 'role',
+			title: 'Vendors',
+			dataIndex: 'vendorId',
 			valueType: 'text',
 		}
 	];
 
-	const requestColumns: ProDescriptionsItemProps<Vendor.VendorInfo_Request>[] = [
+	const requestColumns: ProDescriptionsItemProps<Doc.DocInfo_Request>[] = [
 		{
-			title: 'Name',
-			dataIndex: 'name',
+			title: 'Title',
+			dataIndex: 'title',
 			valueType: 'text',
 		},
 		{
-			title: 'Description',
-			dataIndex: 'description',
+			title: 'Data',
+			dataIndex: 'data',
 			valueType: 'text',
 		},
 		{
-			title: 'Role',
-			dataIndex: 'role',
+			title: 'Vendor',
+			dataIndex: 'vendorId',
 			valueType: 'text',
 		}
 	];
@@ -58,7 +57,7 @@ export default function Page() {
 				title: "Document"
 			}}
 		>
-			<ProTable<Vendor.VendorInfo>
+			<ProTable<Doc.DocInfo>
 				actionRef={actionRef}
 				rowKey="id"
 				search={{
@@ -74,13 +73,7 @@ export default function Page() {
 					</Button>,
 				]}
 				request={async (params, sorter, filter) => {
-					const { data, success } = await queryVendorList({
-						...params,
-						// FIXME: remove @ts-ignore
-						// @ts-ignore
-						sorter,
-						filter,
-					});
+					const { data, success } = await queryDocList();
 					console.log(data);
 					return {
 						data: data,
@@ -96,7 +89,7 @@ export default function Page() {
 				onCancel={() => handleModalVisible(false)}
 				modalVisible={createModalVisible}
 			>
-				<ProTable<Vendor.VendorInfo_Request, Vendor.VendorInfo_Request>
+				<ProTable<Doc.DocInfo, Doc.DocInfo>
 					onSubmit={async () => {
 						// TBD
 					}}
@@ -107,4 +100,6 @@ export default function Page() {
 			</CreateForm>
 		</PageContainer>
 	);
-}
+};
+
+export default Page;
