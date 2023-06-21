@@ -72,9 +72,11 @@ const Page: React.FC = () => {
 						Create
 					</Button>,
 				]}
-				request={async (params, sorter, filter) => {
+				request={async () => {
 					const { data, success } = await queryDocList();
+					console.log(GLOBAL_HOST);
 					console.log(data);
+					console.log(success);
 					return {
 						data: data,
 						success,
