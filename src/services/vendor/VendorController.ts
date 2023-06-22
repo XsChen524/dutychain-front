@@ -1,6 +1,6 @@
 import { request } from "@umijs/max";
 
-export async function queryVendorList(options?: { [key: string]: any }) {
+export const queryVendorList = async (options?: { [key: string]: any }) => {
 	return request("https://middle.tracechain.top/vendor", {
 		method: "GET",
 		headers: {
@@ -8,7 +8,7 @@ export async function queryVendorList(options?: { [key: string]: any }) {
 		},
 		...(options || {}),
 	});
-}
+};
 
 export async function addUser(
 	body?: API.UserInfoVO,

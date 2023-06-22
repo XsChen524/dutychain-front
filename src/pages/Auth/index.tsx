@@ -1,16 +1,46 @@
+import services from '@/services/auth';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, PageContainer, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { LoginForm, PageContainer, ProFormText } from '@ant-design/pro-components';
+import { useEffect, useState } from 'react';
 
-export default function Page() {
+const { login } = services.AuthController;
+
+const AuthPage: React.FC = () => {
+
+	const [loginInfo, setLoginInfo] = useState<Auth.User_Login_Request | undefined>(undefined);
+
+	const onFinish = async (formValue: Auth.User_Login_Request | undefined): Promise<boolean> => {
+		if (formValue) {
+			setLoginInfo(formValue);
+
+			// Post request, should dispatch and reload
+			const data = await login(formValue);
+			if (data) {
+				console.log(data);
+			} else {
+				console.log('undefined');
+			}
+			return true;
+		} else {
+			return false;
+		}
+
+	};
+
+	useEffect(() => {
+		console.log(loginInfo);
+	}, [loginInfo]);
+
 	return (
 		<PageContainer ghost>
 			<div>
 				<LoginForm
 					title="DutyChain"
 					subTitle="Login for all organizations"
+					onFinish={onFinish}
 				>
 					<ProFormText
-						name="username"
+						name="name"
 						fieldProps={{
 							size: 'large',
 							prefix: <UserOutlined className={'prefixIcon'} />,
@@ -42,12 +72,10 @@ export default function Page() {
 							marginBlockEnd: 24,
 						}}
 					>
-						<ProFormCheckbox noStyle name="autoLogin">
-							Auto login
-						</ProFormCheckbox>
 						<a
 							style={{
 								float: 'right',
+								marginBottom: 20
 							}}
 						>
 							Forget password
@@ -57,4 +85,6 @@ export default function Page() {
 			</div>
 		</PageContainer>
 	);
-}
+};
+
+export default AuthPage;

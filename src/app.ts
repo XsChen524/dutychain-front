@@ -20,7 +20,9 @@ export const request: RequestConfig = {
 	timeout: 5000,
 	// other axios options you want
 	errorConfig: {
-		errorHandler() {},
+		errorHandler(err) {
+			console.error(err);
+		},
 		errorThrower() {},
 	},
 	requestInterceptors: [],
