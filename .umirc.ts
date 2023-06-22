@@ -8,6 +8,7 @@ export default defineConfig({
 			locale: enUS,
 		},
 	},
+	dva: {},
 	access: {},
 	model: {},
 	initialState: {},
@@ -22,26 +23,27 @@ export default defineConfig({
 	},
 	routes: [
 		{
-			path: "/",
-			redirect: "/home",
-		},
-		{
 			name: "Home",
-			path: "/home",
+			path: "/",
 			component: "./Home",
 		},
 		/*
-		{
-			name: "权限演示",
-			path: "/access",
-			component: "./Access",
-		},
-		{
-			name: " CRUD 示例",
-			path: "/table",
-			component: "./Table",
-		},
+			{
+				name: "权限演示",
+				path: "/access",
+				component: "./Access",
+			},
+			{
+				name: " CRUD 示例",
+				path: "/table",
+				component: "./Table",
+			},
 		*/
+		{
+			name: "Login",
+			path: "/auth/login",
+			component: "./Auth",
+		},
 		{
 			name: "Vendor",
 			path: "/vendor",
