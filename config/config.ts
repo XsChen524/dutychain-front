@@ -1,8 +1,9 @@
-import { defineConfig } from "@umijs/max";
 import enUS from "antd/locale/en_US";
+import { defineConfig } from "@umijs/max";
 
 export default defineConfig({
 	npmClient: "npm",
+	favicons: ["/favicon.ico"],
 	antd: {
 		configProvider: {
 			locale: enUS,
@@ -16,6 +17,7 @@ export default defineConfig({
 		dataField: "data",
 	},
 	layout: {
+		logo: "logo.png",
 		title: "DutyChain",
 	},
 	history: {
