@@ -3,7 +3,6 @@ declare namespace Auth {
 		id: number;
 		name: string;
 		email: string;
-		password: string;
 		organization: string;
 		walletId: string;
 		role: "vendor" | "client";
@@ -34,13 +33,5 @@ declare namespace Auth {
 		wallet?: string;
 	}
 
-	export interface User_Signup_Response {
-		id: number;
-		name: string;
-		email: string;
-		walletId: string;
-		organization: string;
-		role: "vendor" | "client";
-		isAdmin: boolean;
-	}
+	export type User_Signup_Response = UserInfo;
 }

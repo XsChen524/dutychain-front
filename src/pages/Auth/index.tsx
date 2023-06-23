@@ -1,6 +1,7 @@
 import services from '@/services/auth';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, PageContainer, ProFormText } from '@ant-design/pro-components';
+import { connect } from '@umijs/max';
 import { useEffect, useState } from 'react';
 
 const { login } = services.AuthController;
