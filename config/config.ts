@@ -14,7 +14,7 @@ export default defineConfig({
 	model: {},
 	initialState: {},
 	request: {
-		dataField: "",
+		dataField: "data",
 	},
 	layout: {
 		logo: "logo.png",

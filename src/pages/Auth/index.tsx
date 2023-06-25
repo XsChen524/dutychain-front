@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const { login } = services.AuthController;
 
-const AuthPage: React.FC = () => {
+const AuthPage = ({ user, dispatch }) => {
 
 	const [loginInfo, setLoginInfo] = useState<Auth.User_Login_Request | undefined>(undefined);
 
@@ -15,13 +15,26 @@ const AuthPage: React.FC = () => {
 			setLoginInfo(formValue);
 
 			// Post request, should dispatch and reload
-			const data = await login(formValue);
-			if (data) {
-				console.log(data);
-			} else {
-				console.log('undefined');
-			}
+			// const data = await login(formValue);
+			return new Promise((resolve, reject) => {
+				dispatch({
+					type: 'user/login',
+					payload: {
+						loginInfo: formValue,
+						resolve,
+						reject
+					}
+				}).then(null, (data) => {
+					if (data) {
+						console.log(data);
+					} else {
+						console.log('failed');
+					}
+				});
+			});
 			return true;
+
+
 		} else {
 			return false;
 		}
@@ -88,4 +101,8 @@ const AuthPage: React.FC = () => {
 	);
 };
 
-export default AuthPage;
+const mapStateToProps = ({ user }) => {
+	return { user };
+};
+
+export default connect(mapStateToProps)(AuthPage);
