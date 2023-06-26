@@ -17,7 +17,7 @@ const AuthPage: React.FunctionComponent<{
 		console.log(user);
 	};
 
-	const onFinish = async (formValue: Auth.User_Login_Request | undefined): Promise<boolean> => {
+	const onFinish = async (formValue: Auth.User_Login_Request | undefined): Promise<void> => {
 		if (formValue) {
 			setLoginInfo(formValue);
 
@@ -31,21 +31,9 @@ const AuthPage: React.FunctionComponent<{
 						resolve,
 						reject
 					}
-				}).then(null, (data) => {
-					if (data) {
-						console.log(data);
-					} else {
-						console.log('failed');
-					}
 				});
 			});
-			return true;
-
-
-		} else {
-			return false;
 		}
-
 	};
 
 	useEffect(() => {

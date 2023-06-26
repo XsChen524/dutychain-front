@@ -3,8 +3,14 @@ import { RequestConfig } from "@umijs/max";
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
-export async function getInitialState(): Promise<{ name: string }> {
-	return { name: "user" };
+export async function getInitialState(): Promise<Auth.UserInfo | undefined> {
+	const userStr = sessionStorage.getItem("user");
+	if (userStr) {
+		const user = JSON.parse(userStr);
+		return user;
+	} else {
+		return undefined;
+	}
 }
 
 export const layout = () => {
@@ -17,12 +23,19 @@ export const layout = () => {
 };
 
 export const request: RequestConfig = {
+	baseURL: GLOBAL_HOST,
+	// `validateStatus` defines whether to resolve or reject the promise for a given
+	// HTTP response status code. If `validateStatus` returns `true` (or is set to `null`
+	// or `undefined`), the promise will be resolved; otherwise, the promise will be
+	// rejected.
+	validateStatus: function (status) {
+		return status >= 200 && status < 300; // default
+	},
+
 	timeout: 5000,
 	// other axios options you want
 	errorConfig: {
-		errorHandler(err) {
-			console.error(err);
-		},
+		errorHandler() {},
 		errorThrower() {},
 	},
 	requestInterceptors: [],
