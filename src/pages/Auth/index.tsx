@@ -1,14 +1,21 @@
-import services from '@/services/auth';
+import { Button } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, PageContainer, ProFormText } from '@ant-design/pro-components';
 import { connect } from '@umijs/max';
 import { useEffect, useState } from 'react';
 
-const { login } = services.AuthController;
+const AuthPage: React.FunctionComponent<{
+	user: Auth.UserInfo,
+	dispatch
+}> = (props) => {
 
-const AuthPage = ({ user, dispatch }) => {
+	const { user, dispatch } = props;
 
 	const [loginInfo, setLoginInfo] = useState<Auth.User_Login_Request | undefined>(undefined);
+
+	const onClickShowAuth = () => {
+		console.log(user);
+	};
 
 	const onFinish = async (formValue: Auth.User_Login_Request | undefined): Promise<boolean> => {
 		if (formValue) {
@@ -18,7 +25,7 @@ const AuthPage = ({ user, dispatch }) => {
 			// const data = await login(formValue);
 			return new Promise((resolve, reject) => {
 				dispatch({
-					type: 'user/login',
+					type: 'user/doLogin',
 					payload: {
 						loginInfo: formValue,
 						resolve,
@@ -97,11 +104,15 @@ const AuthPage = ({ user, dispatch }) => {
 					</div>
 				</LoginForm>
 			</div>
+			<div>
+				<Button onClick={onClickShowAuth}>Show state</Button>
+			</div>
 		</PageContainer>
 	);
 };
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = (state) => {
+	const { user } = state.user;
 	return { user };
 };
 

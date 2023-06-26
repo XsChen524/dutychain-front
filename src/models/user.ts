@@ -4,11 +4,13 @@ const { login } = services.AuthController;
 
 interface AuthState {
 	isLogin: boolean;
+	token: string | undefined;
 	user: undefined | Auth.UserInfo;
 }
 
 const initialState: AuthState = {
 	isLogin: false,
+	token: undefined,
 	user: undefined,
 };
 
@@ -18,7 +20,7 @@ export default {
 	state: initialState,
 
 	reducers: {
-		signIn(state: AuthState, action: { payload: Auth.UserInfo }) {
+		loginSuccess(state: AuthState, action: { payload: Auth.UserInfo }) {
 			return {
 				...state,
 				isLogin: true,
@@ -26,7 +28,7 @@ export default {
 			};
 		},
 
-		signOut(state: AuthState) {
+		logoutSuccess(state: AuthState) {
 			return {
 				...state,
 				isLogin: false,
@@ -36,26 +38,14 @@ export default {
 	},
 
 	effects: {
-		*login({ payload }, { put, call }: { put: any; call: any }) {
+		*doLogin({ payload }, { put, call }) {
 			let { loginInfo, resolve, reject } = payload;
-			const { data } = yield call(login, loginInfo);
-
-			console.log("User model effect *login: ");
-			console.log(data);
-
-			if (data && data.success) {
-				/*
-				let userInfo = data.userInfo;
-				yield sessionStorage.setItem(
-					"userInfo",
-					JSON.stringify(userInfo)
-				);
-				//注册成功
-				yield put({
-					type: "logupSuccess",
-					payload: userInfo,
-				});
-				*/
+			const { data, success } = yield call(login, loginInfo);
+			if (data && success) {
+				console.log("Dva: doLogin succeed");
+				const userInfo = data;
+				yield sessionStorage.setItem("user", JSON.stringify(userInfo));
+				yield put({ type: "loginSuccess", payload: userInfo });
 				resolve();
 			} else {
 				reject(data);
