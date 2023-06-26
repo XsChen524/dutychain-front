@@ -1,4 +1,4 @@
-import styles from './index.less';
+import styles from '@/stylesheets/defaultPages.less';
 import { Layout, Row, Typography } from 'antd';
 import { PageContainer } from '@ant-design/pro-components';
 

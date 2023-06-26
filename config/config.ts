@@ -56,5 +56,10 @@ export default defineConfig({
 			path: "/document",
 			component: "./Document",
 		},
+		{
+			name: "Profile",
+			path: "/profile",
+			component: "./Profile",
+		},
 	],
 });

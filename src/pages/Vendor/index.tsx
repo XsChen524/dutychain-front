@@ -1,6 +1,6 @@
 import CreateForm from './components/CreateForm';
 import services from '@/services/vendor';
-import styles from './index.less';
+import styles from '@/stylesheets/defaultPages.less';
 import { ActionType, PageContainer, ProDescriptionsItemProps, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { useRef, useState } from 'react';
