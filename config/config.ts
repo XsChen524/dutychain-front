@@ -45,6 +45,7 @@ export default defineConfig({
 			name: "Login",
 			path: "/auth/login",
 			component: "./Auth",
+			access: "isLoggedOut",
 		},
 		{
 			name: "Vendor",
@@ -60,6 +61,7 @@ export default defineConfig({
 			name: "Profile",
 			path: "/profile",
 			component: "./Profile",
+			access: "isLoggedIn",
 		},
 	],
 });

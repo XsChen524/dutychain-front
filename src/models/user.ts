@@ -19,8 +19,29 @@ export default {
 
 	state: initialState,
 
+	subscriptions: {
+		setup({ dispatch, history }) {
+			history.listen((location) => {
+				if (location.pathname === "/") {
+					if (sessionStorage.getItem("user")) {
+						dispatch({
+							type: "loginSuccess",
+							payload:
+								(JSON.parse(
+									sessionStorage.getItem("user") as string
+								) as Auth.User_Login_Response) || {},
+						});
+					}
+				}
+			});
+		},
+	},
+
 	reducers: {
-		loginSuccess(state: AuthState, action: { payload: Auth.UserInfo }) {
+		loginSuccess(
+			state: AuthState,
+			action: { payload: Auth.User_Login_Response }
+		) {
 			return {
 				...state,
 				isLogin: true,

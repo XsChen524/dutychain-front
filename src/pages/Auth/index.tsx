@@ -4,10 +4,7 @@ import { LoginForm, PageContainer, ProFormText } from '@ant-design/pro-component
 import { connect } from '@umijs/max';
 import { useEffect, useState } from 'react';
 
-const AuthPage: React.FunctionComponent<{
-	user: Auth.UserInfo,
-	dispatch
-}> = (props) => {
+const AuthPage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = (props) => {
 
 	const { user, dispatch } = props;
 

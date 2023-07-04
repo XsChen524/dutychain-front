@@ -7,6 +7,7 @@ const { Title, Paragraph, Text, Link } = Typography;
 const HomePage: React.FC = () => {
 
 	// const { name } = useModel('global');
+	console.log('Get user from session' + sessionStorage.getItem("user"));
 
 	return (
 		<PageContainer ghost>

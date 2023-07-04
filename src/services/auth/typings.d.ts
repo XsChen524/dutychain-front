@@ -4,9 +4,10 @@ declare namespace Auth {
 		name: string;
 		email: string;
 		organization: string;
-		walletId: string;
+		walletId?: string; // TBD
 		role: "vendor" | "client";
 		isAdmin: boolean;
+		token: string;
 	}
 
 	export interface User_Login_Request {
@@ -18,7 +19,10 @@ declare namespace Auth {
 	export interface User_Login_Response {
 		id: number;
 		name: string;
-		walletId: string;
+		email: string;
+		organization: string;
+		role: "vendor" | "client";
+		isAdmin: boolean;
 		token: string;
 	}
 
@@ -33,5 +37,13 @@ declare namespace Auth {
 		wallet?: string;
 	}
 
-	export type User_Signup_Response = UserInfo;
+	export interface User_Signup_Response {
+		id: number;
+		name: string;
+		email: string;
+		organization: string;
+		walletId?: string;
+		role: "vendor" | "client";
+		isAdmin: boolean;
+	}
 }
