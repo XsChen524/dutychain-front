@@ -56,13 +56,19 @@ export default defineConfig({
 		{
 			name: "Administration",
 			path: "/admin",
-			component: "./Administration",
+			component: "./Administration/AdminPage.tsx",
+			access: "isAdmin",
+		},
+		{
+			name: "Table Template",
+			path: "/admin/table-template",
+			component: "./Table/Table.tsx",
 			access: "isAdmin",
 		},
 		{
 			name: "Profile",
 			path: "/profile",
-			component: "./Profile",
+			component: "./Profile/ProfilePage.tsx",
 			access: "isLoggedIn",
 		},
 	],

@@ -18,4 +18,30 @@ const login = async (
 	});
 };
 
-export { login };
+const queryUsersByOrg = async (
+	params: {
+		organization: string;
+		jwt: string;
+	},
+	options?: {
+		[key: string]: any;
+	}
+): Promise<void | {
+	success: boolean;
+	data: Auth.User_Query_List[];
+}> => {
+	return request<{ success: boolean; data: Auth.User_Query_List[] }>(
+		`/admin/${params.organization}/user`,
+		{
+			method: "GET",
+			headers: {
+				Authorization: params.jwt,
+			},
+			...(options || {}),
+		}
+	).catch((err) => {
+		console.error("queryUsersByOrg: " + err);
+	});
+};
+
+export { login, queryUsersByOrg };

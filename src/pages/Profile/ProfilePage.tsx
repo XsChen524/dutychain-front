@@ -4,7 +4,7 @@ import { connect } from '@umijs/max';
 
 const ProfilePage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = (props) => {
 
-	const { user, dispatch } = props;
+	const { user } = props;
 
 	const onClickLogout = () => {
 		console.log(user);

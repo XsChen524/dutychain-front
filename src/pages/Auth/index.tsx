@@ -27,6 +27,9 @@ const AuthPage: React.FunctionComponent<{ user, dispatch }> = (props) => {
 						loginInfo: formValue,
 						resolve,
 						reject
+					},
+					callback: () => {
+						window.location.replace('/');
 					}
 				});
 			});

@@ -9,6 +9,14 @@ declare namespace Auth {
 		isAdmin: boolean;
 		token: string;
 	}
+	export interface User_Query_List {
+		id: number;
+		name: string;
+		email: string;
+		organization: string;
+		role: "vendor" | "client";
+		isAdmin: boolean;
+	}
 
 	export interface User_Login_Request {
 		name: string;

@@ -59,13 +59,14 @@ export default {
 	},
 
 	effects: {
-		*doLogin({ payload }, { put, call }) {
+		*doLogin({ payload, callback }, { put, call }) {
 			let { loginInfo, resolve, reject } = payload;
 			const { data, success } = yield call(login, loginInfo);
 			if (data && success) {
 				const userInfo = data as Auth.User_Login_Response;
 				yield sessionStorage.setItem("user", JSON.stringify(userInfo));
 				yield put({ type: "loginSuccess", payload: userInfo });
+				if (callback) callback();
 				resolve();
 			} else {
 				reject();
