@@ -35,7 +35,7 @@ const queryUsersByOrg = async (
 		{
 			method: "GET",
 			headers: {
-				Authorization: params.jwt,
+				Authorization: "Bearer " + params.jwt,
 			},
 			...(options || {}),
 		}
@@ -44,4 +44,17 @@ const queryUsersByOrg = async (
 	});
 };
 
-export { login, queryUsersByOrg };
+const registerUser = async (
+	body: Auth.User_Signup_Request,
+	options?: {
+		[key: string]: any;
+	}
+) => {
+	return request(`/auth/signup`, {
+		method: "POST",
+		data: body,
+		...(options || {}),
+	});
+};
+
+export { login, queryUsersByOrg, registerUser };
