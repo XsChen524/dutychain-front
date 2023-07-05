@@ -5,15 +5,22 @@ import { RequestConfig } from "@umijs/max";
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<{
 	isLoggedIn: boolean;
+	isAdmin: boolean | undefined;
+	name: string | undefined;
 }> {
 	const userStr: string | null = sessionStorage.getItem("user");
 	if (userStr) {
+		const user: Auth.UserInfo = JSON.parse(userStr);
 		return {
 			isLoggedIn: true,
+			isAdmin: user.isAdmin,
+			name: user.name,
 		};
 	} else {
 		return {
 			isLoggedIn: false,
+			isAdmin: undefined,
+			name: undefined,
 		};
 	}
 }

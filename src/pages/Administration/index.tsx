@@ -1,10 +1,13 @@
 import styles from '@/stylesheets/defaultPages.less';
-import { Layout, Row, Typography } from 'antd';
+import { Access } from '@umijs/max';
+import { Button, Layout, Row, Typography } from 'antd';
 import { PageContainer } from '@ant-design/pro-components';
+import { useAccess } from '@umijs/max';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
-const HomePage: React.FC = () => {
+const AdministrationPage = () => {
+	const access = useAccess();
 
 	return (
 		<PageContainer ghost>
@@ -13,17 +16,17 @@ const HomePage: React.FC = () => {
 					<Row>
 						<Typography>
 							<Title level={2} className={styles.title}>
-								DutyChain
-							</Title>
-							<Title level={3} className={styles.title}>
-								Responsibility Tracing Based on Distributed Ledger
+								Administration
 							</Title>
 						</Typography>
 					</Row>
 				</Layout>
+				<Access accessible={access.isAdmin}>
+					<Button>Updated: 5/21</Button>
+				</Access>
 			</div>
 		</PageContainer>
 	);
 };
 
-export default HomePage;
+export default AdministrationPage;

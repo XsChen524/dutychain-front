@@ -48,14 +48,16 @@ export default defineConfig({
 			access: "isLoggedOut",
 		},
 		{
-			name: "Vendor",
-			path: "/vendor",
-			component: "./Vendor",
-		},
-		{
 			name: "Document",
 			path: "/document",
 			component: "./Document",
+			access: "isLoggedIn",
+		},
+		{
+			name: "Administration",
+			path: "/admin",
+			component: "./Administration",
+			access: "isAdmin",
 		},
 		{
 			name: "Profile",

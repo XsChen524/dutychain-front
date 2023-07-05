@@ -1,13 +1,17 @@
-const initialAccess = (initialState: { isLoggedIn: boolean }) => {
+const initialAccess = (initialState: {
+	isLoggedIn: boolean;
+	isAdmin: boolean;
+	name: string | undefined;
+}) => {
 	const isLoggedIn = initialState.isLoggedIn;
 	const isLoggedOut = !isLoggedIn;
-	const canSeeAdmin = initialState ? true : false;
+	const isAdmin = initialState.isAdmin ? true : false;
 	console.log("isLoggedIn: " + isLoggedIn);
-	console.log("canSeeAdmin: " + canSeeAdmin);
+	console.log("isAdmin: " + isAdmin);
 	return {
 		isLoggedIn,
 		isLoggedOut,
-		canSeeAdmin,
+		isAdmin,
 	};
 };
 
