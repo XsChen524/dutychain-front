@@ -1,7 +1,6 @@
 import services from "@/services/auth";
 
 const { login } = services.AuthController;
-
 interface AuthState {
 	isLogin: boolean;
 	refreshToken: string | undefined;
@@ -20,20 +19,19 @@ export default {
 	state: initialState,
 
 	subscriptions: {
-		setup({ dispatch, history }) {
-			history.listen((location) => {
-				if (location.pathname === "/") {
-					if (sessionStorage.getItem("user")) {
-						dispatch({
-							type: "loginSuccess",
-							payload:
-								(JSON.parse(
-									sessionStorage.getItem("user") as string
-								) as Auth.User_Login_Response) || {},
-						});
-					}
+		setup({ dispatch }) {
+			window.onload = () => {
+				const user = sessionStorage.getItem("user");
+				if (user) {
+					dispatch({
+						type: "loginSuccess",
+						payload:
+							(JSON.parse(
+								user as string
+							) as Auth.User_Login_Response) || {},
+					});
 				}
-			});
+			};
 		},
 	},
 
@@ -65,7 +63,7 @@ export default {
 			let { loginInfo, resolve, reject } = payload;
 			const { data, success } = yield call(login, loginInfo);
 			if (data && success) {
-				const userInfo = data;
+				const userInfo = data as Auth.User_Login_Response;
 				yield sessionStorage.setItem("user", JSON.stringify(userInfo));
 				yield put({ type: "loginSuccess", payload: userInfo });
 				resolve();

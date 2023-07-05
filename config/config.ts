@@ -21,7 +21,7 @@ export default defineConfig({
 		title: "DutyChain",
 	},
 	history: {
-		type: "hash",
+		type: "browser",
 	},
 	routes: [
 		{
