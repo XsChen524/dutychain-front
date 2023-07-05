@@ -22,6 +22,7 @@ export default {
 		setup({ dispatch }) {
 			window.onload = () => {
 				const user = sessionStorage.getItem("user");
+				console.log("setup dispatch: " + user);
 				if (user) {
 					dispatch({
 						type: "loginSuccess",

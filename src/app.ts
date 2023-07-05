@@ -11,6 +11,7 @@ export async function getInitialState(): Promise<{
 	const userStr: string | null = sessionStorage.getItem("user");
 	if (userStr) {
 		const user: Auth.UserInfo = JSON.parse(userStr);
+		console.log(user);
 		return {
 			isLoggedIn: true,
 			isAdmin: user.isAdmin,

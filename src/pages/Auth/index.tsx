@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Result, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, PageContainer, ProFormText } from '@ant-design/pro-components';
 import { connect } from '@umijs/max';
@@ -9,6 +9,7 @@ const AuthPage: React.FunctionComponent<{ user, dispatch }> = (props) => {
 	const { user, dispatch } = props;
 
 	const [loginInfo, setLoginInfo] = useState<Auth.User_Login_Request | undefined>(undefined);
+	const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
 
 	const onClickShowAuth = () => {
 		console.log(user);
@@ -28,7 +29,11 @@ const AuthPage: React.FunctionComponent<{ user, dispatch }> = (props) => {
 						resolve,
 						reject
 					},
-					callback: () => {
+					callback: async () => {
+						setLoginSuccess(true);
+						await (async (time) => {
+							return new Promise((resolve) => setTimeout(resolve, time));
+						})(5000);
 						window.location.replace('/');
 					}
 				});
@@ -42,59 +47,68 @@ const AuthPage: React.FunctionComponent<{ user, dispatch }> = (props) => {
 
 	return (
 		<PageContainer ghost>
-			<div>
-				<LoginForm
-					title="DutyChain"
-					subTitle="Login for all organizations"
-					onFinish={onFinish}
-				>
-					<ProFormText
-						name="name"
-						fieldProps={{
-							size: 'large',
-							prefix: <UserOutlined className={'prefixIcon'} />,
-						}}
-						placeholder={'Username'}
-						rules={[
-							{
-								required: true,
-								message: 'Please fill in username',
-							},
+			{loginSuccess ?
+				<div>
+					<Result
+						status="success"
+						title="Successfully login!"
+						subTitle="The page will be directed in 5 seconds"
+						extra={[
+							<Button key={'showAuth'} onClick={onClickShowAuth}>Show state</Button>
 						]}
 					/>
-					<ProFormText.Password
-						name="password"
-						fieldProps={{
-							size: 'large',
-							prefix: <LockOutlined className={'prefixIcon'} />,
-						}}
-						placeholder={'Password'}
-						rules={[
-							{
-								required: true,
-								message: 'Please fill in password',
-							},
-						]}
-					/>
-					<div
-						style={{
-							marginBlockEnd: 24,
-						}}
+				</div> :
+				<div>
+					<LoginForm
+						title="DutyChain"
+						subTitle="Login for all organizations"
+						onFinish={onFinish}
 					>
-						<a
+						<ProFormText
+							name="name"
+							fieldProps={{
+								size: 'large',
+								prefix: <UserOutlined className={'prefixIcon'} />,
+							}}
+							placeholder={'Username'}
+							rules={[
+								{
+									required: true,
+									message: 'Please fill in username',
+								},
+							]}
+						/>
+						<ProFormText.Password
+							name="password"
+							fieldProps={{
+								size: 'large',
+								prefix: <LockOutlined className={'prefixIcon'} />,
+							}}
+							placeholder={'Password'}
+							rules={[
+								{
+									required: true,
+									message: 'Please fill in password',
+								},
+							]}
+						/>
+						<div
 							style={{
-								float: 'right',
-								marginBottom: 20
+								marginBlockEnd: 24,
 							}}
 						>
-							Forget password
-						</a>
-					</div>
-				</LoginForm>
-			</div>
-			<div>
-				<Button onClick={onClickShowAuth}>Show state</Button>
-			</div>
+							<a
+								style={{
+									float: 'right',
+									marginBottom: 20
+								}}
+							>
+								Forget password
+							</a>
+						</div>
+					</LoginForm>
+				</div>
+			}
 		</PageContainer>
 	);
 };
