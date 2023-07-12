@@ -1,23 +1,26 @@
 declare namespace Auth {
-	export interface UserInfo {
+	export type UserInfo = {
 		id: number;
 		name: string;
 		email: string;
 		organization: string;
-		walletId?: string; // TBD
-		role: "vendor" | "client";
+		organizationId: number;
+		walletId: string;
+		role: string;
 		isAdmin: boolean;
 		token: string;
-	}
-	export interface User_Query_List {
-		id: number;
-		name: string;
-		email: string;
-		organization: string;
-		role: "vendor" | "client";
-		isAdmin: boolean;
-	}
+		walletId: string;
+	};
 
+	export type UserState = {
+		isLogin: boolean;
+		isLoading: boolean;
+		user: undefined | Auth.UserInfo;
+	};
+
+	/**
+	 * Typings for login
+	 */
 	export interface User_Login_Request {
 		name: string;
 		password: string;
@@ -28,18 +31,18 @@ declare namespace Auth {
 		id: number;
 		name: string;
 		email: string;
-		organization: string;
-		role: "vendor" | "client";
+		organization: string; // Organization name
+		role: string;
 		isAdmin: boolean;
 		token: string;
+		walletId: string;
 	}
 
 	export interface User_Signup_Request {
 		name: string;
 		password: string;
 		email: string;
-		// compulsory, select from drawable, could be "" if role is client
-		organization: string;
+		organizationId: number;
 		role: "vendor" | "client";
 		isAdmin?: boolean;
 		wallet?: string;
@@ -51,6 +54,15 @@ declare namespace Auth {
 		email: string;
 		organization: string;
 		walletId?: string;
+		role: "vendor" | "client";
+		isAdmin: boolean;
+	}
+
+	export interface User_Query_List {
+		id: number;
+		name: string;
+		email: string;
+		organization: string;
 		role: "vendor" | "client";
 		isAdmin: boolean;
 	}

@@ -17,7 +17,7 @@ export default defineConfig({
 		dataField: "",
 	},
 	layout: {
-		logo: "logo.png",
+		logo: "/logo.png",
 		title: "DutyChain",
 	},
 	history: {
@@ -27,31 +27,12 @@ export default defineConfig({
 		{
 			name: "Home",
 			path: "/",
-			component: "./Home",
-		},
-		/*
-			{
-				name: "权限演示",
-				path: "/access",
-				component: "./Access",
-			},
-			{
-				name: " CRUD 示例",
-				path: "/table",
-				component: "./Table",
-			},
-		*/
-		{
-			name: "Login",
-			path: "/auth/login",
-			component: "./Auth",
-			access: "isLoggedOut",
+			component: "./Home/HomePage.tsx",
 		},
 		{
 			name: "Document",
-			path: "/document",
-			component: "./Document",
-			access: "isLoggedIn",
+			path: "document",
+			component: "./Document/index.tsx",
 		},
 		{
 			name: "Administration",
@@ -60,16 +41,25 @@ export default defineConfig({
 			access: "isAdmin",
 		},
 		{
-			name: "Table Template",
-			path: "/admin/table-template",
-			component: "./Table/Table.tsx",
-			access: "isAdmin",
-		},
-		{
 			name: "Profile",
 			path: "/profile",
 			component: "./Profile/ProfilePage.tsx",
 			access: "isLoggedIn",
+		},
+
+		{
+			name: "Authentication",
+			path: "/auth/login",
+			component: "./Auth/LoginPage.tsx",
+			access: "isLoggedOut",
+			routes: [
+				{
+					name: "Result",
+					path: "/auth/login/result",
+					component: "./Auth/LoginResult.tsx",
+					hideInMenu: true,
+				},
+			],
 		},
 	],
 });

@@ -1,37 +1,42 @@
 // 运行时配置
-import { RequestConfig } from "@umijs/max";
+import { RequestConfig, RunTimeLayoutConfig } from "@umijs/max";
+import { loadInitialData } from "./utils/utils";
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<{
-	isLoggedIn: boolean;
+	isLogin: boolean;
 	isAdmin: boolean | undefined;
 	name: string | undefined;
+	user: Auth.UserInfo | undefined;
 }> {
-	const userStr: string | null = sessionStorage.getItem("user");
-	if (userStr) {
-		const user: Auth.UserInfo = JSON.parse(userStr);
-		console.log(user);
-		return {
-			isLoggedIn: true,
-			isAdmin: user.isAdmin,
-			name: user.name,
-		};
-	} else {
-		return {
-			isLoggedIn: false,
-			isAdmin: undefined,
-			name: undefined,
-		};
-	}
+	console.log("getInitialState");
+	const userInfo: Auth.UserInfo | undefined = await loadInitialData();
+	const isLogin = !!userInfo;
+	const isAdmin = userInfo?.isAdmin;
+	const name = userInfo?.name;
+	return {
+		isLogin,
+		isAdmin,
+		name,
+		user: userInfo ? userInfo : undefined,
+	};
 }
 
-export const layout = () => {
+export const layout: RunTimeLayoutConfig = (initialState) => {
 	return {
+		appList: undefined,
 		logo: "https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg",
 		menu: {
 			locale: false,
 		},
+		avatarProps: initialState.initialState?.isLogin
+			? {
+					src: "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png",
+					title: initialState.initialState?.name,
+			  }
+			: undefined,
+		rightContentRender: false,
 	};
 };
 

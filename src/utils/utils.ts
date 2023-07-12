@@ -1,3 +1,11 @@
+export const loadInitialData = async (): Promise<undefined | Auth.UserInfo> => {
+	return new Promise<undefined | Auth.UserInfo>((resolve) => {
+		const userInfo = sessionStorage.getItem("user");
+		if (userInfo) resolve(JSON.parse(userInfo));
+		else resolve(undefined);
+	});
+};
+
 /**
  * Determine if the key is one of keys in object
  * @param key

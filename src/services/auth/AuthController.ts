@@ -18,6 +18,19 @@ const login = async (
 	});
 };
 
+const registerUser = async (
+	body: Auth.User_Signup_Request,
+	options?: {
+		[key: string]: any;
+	}
+) => {
+	return request(`/auth/signup`, {
+		method: "POST",
+		data: body,
+		...(options || {}),
+	});
+};
+
 const queryUsersByOrg = async (
 	params: {
 		organization: string;
@@ -41,19 +54,6 @@ const queryUsersByOrg = async (
 		}
 	).catch((err) => {
 		console.error("queryUsersByOrg: " + err);
-	});
-};
-
-const registerUser = async (
-	body: Auth.User_Signup_Request,
-	options?: {
-		[key: string]: any;
-	}
-) => {
-	return request(`/auth/signup`, {
-		method: "POST",
-		data: body,
-		...(options || {}),
 	});
 };
 

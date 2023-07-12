@@ -1,15 +1,10 @@
 import services from "@/services/auth";
 
 const { login } = services.AuthController;
-interface AuthState {
-	isLogin: boolean;
-	refreshToken: string | undefined;
-	user: undefined | Auth.UserInfo;
-}
 
-const initialState: AuthState = {
+const initialState: Auth.UserState = {
 	isLogin: false,
-	refreshToken: undefined,
+	isLoading: true,
 	user: undefined,
 };
 
@@ -18,60 +13,71 @@ export default {
 
 	state: initialState,
 
-	subscriptions: {
-		setup({ dispatch }) {
-			window.onload = () => {
-				const user = sessionStorage.getItem("user");
-				console.log("setup dispatch: " + user);
-				if (user) {
-					dispatch({
-						type: "loginSuccess",
-						payload:
-							(JSON.parse(
-								user as string
-							) as Auth.User_Login_Response) || {},
-					});
-				}
-			};
-		},
-	},
-
 	reducers: {
 		loginSuccess(
-			state: AuthState,
-			action: { payload: Auth.User_Login_Response }
+			state: Auth.UserState,
+			action: { payload: Auth.UserInfo }
 		) {
+			const organizationId: number = Number(
+				action.payload.organization.replace(/[^0-9]/gi, "")
+			);
 			return {
 				...state,
 				isLogin: true,
-				refreshToken: undefined,
-				user: action.payload,
+				isLoading: false,
+				user: { ...action.payload, organizationId },
 			};
 		},
 
-		logout(state: AuthState) {
+		logout(state: Auth.UserState) {
+			sessionStorage.removeItem("user");
 			return {
 				...state,
 				isLogin: false,
-				refreshToken: undefined,
+				isLoading: false,
 				user: undefined,
 			};
 		},
 	},
 
 	effects: {
-		*doLogin({ payload, callback }, { put, call }) {
-			let { loginInfo, resolve, reject } = payload;
-			const { data, success } = yield call(login, loginInfo);
+		*doLogin(
+			{
+				payload,
+				callback,
+			}: {
+				payload: {
+					loginParams: Auth.User_Login_Request;
+					resolve: any;
+					reject: any;
+				};
+				callback: (isComplete: boolean, message?: string) => void;
+			},
+			{
+				put,
+				call,
+			}: {
+				put: any;
+				call: any;
+			}
+		) {
+			const { loginParams, resolve } = payload;
+			const { data, success } = yield call(login, loginParams);
 			if (data && success) {
 				const userInfo = data as Auth.User_Login_Response;
 				yield sessionStorage.setItem("user", JSON.stringify(userInfo));
-				yield put({ type: "loginSuccess", payload: userInfo });
-				if (callback) callback();
-				resolve();
+				yield put({
+					type: "loginSuccess",
+					payload: userInfo as Auth.UserInfo,
+				});
+				if (callback) callback(true, "Login successfully");
+				resolve(true);
 			} else {
-				reject();
+				if (callback) callback(false, "Login failed");
+				resolve(false);
 			}
 		},
+
+		// *doRegister({ payload, callback }, { put, call }) {},
 	},
 };
