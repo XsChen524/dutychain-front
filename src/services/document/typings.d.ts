@@ -15,18 +15,48 @@ declare namespace Doc {
 	};
 	*/
 
-	export type DocInfo = {
-		id: string;
-		title: string;
-		data: string;
-		vendorId: string;
+	export type Document = {
+		key: number;
+		record: {
+			id: number;
+			type: string;
+			data: any;
+		};
 	};
 
-	export interface DocInfo_Request {
+	export type Contract_Document = {
+		id: string;
+		type: "Contract" | string;
+		fromOrg: number;
+		toOrg: number;
+		operatorOrg: number;
+		operatorName: string;
 		title: string;
-		data: string;
-		vendorId: string;
-	}
+		description: string;
+	};
 
-	export type DocInfo_Response = DocInfo;
+	export type Document_Table_Entity = {
+		key: number;
+		type: string;
+		data: string;
+		id: number;
+	};
+
+	export type Document_List_Query_Params = {
+		walletId: string;
+		organizationId: number;
+	};
+
+	export type Document_List_Query_Response = {
+		success: boolean;
+		data?: Document[];
+	};
+
+	export type Create_Document_Request = {
+		id: string; // transactionId, to be a random Hex
+		type: string; // 'Contract' | string
+		data: string; // The stringfied contract
+		org: number;
+		walletId: string;
+	};
 }

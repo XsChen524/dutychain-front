@@ -1,9 +1,8 @@
-import styles from '@/stylesheets/defaultPages.less';
 import { AdminHeaderDesc, AdminTable } from './components';
 import { PageContainer } from '@ant-design/pro-components';
 import { connect } from '@umijs/max';
 
-const AdminPage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = (props) => {
+const AdminPage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch: any }> = (props) => {
 
 	const { user } = props;
 
@@ -11,7 +10,7 @@ const AdminPage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = (p
 		<PageContainer
 			ghost
 			header={{ title: 'Organization Administration', }}
-			content={<AdminHeaderDesc user={user} />}
+			content={user ? <AdminHeaderDesc user={user} /> : undefined}
 		>
 			<AdminTable user={user} />
 		</PageContainer>
@@ -19,8 +18,10 @@ const AdminPage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = (p
 };
 
 
-const mapStateToProps = (state) => {
-	return { user: state.user.user };
+const mapStateToProps = (state: { user: Auth.UserState }) => {
+	const { user } = state.user;
+	return { user };
 };
+
 
 export default connect(mapStateToProps)(AdminPage);

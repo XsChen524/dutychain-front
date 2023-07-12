@@ -1,3 +1,4 @@
+import styles from '@/stylesheets/defaultPages.less';
 import { Outlet, connect, useLocation } from "@umijs/max";
 import { loadInitialData } from "@/utils/utils";
 import { useEffect } from "react";
@@ -33,7 +34,9 @@ const Layout: React.FunctionComponent<{ userState: Auth.UserState, dispatch: any
 	}, [userState]);
 
 	return (
-		<Outlet />
+		<div className={styles.container}>
+			<Outlet />
+		</div>
 	);
 };
 

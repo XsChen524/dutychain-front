@@ -31,8 +31,16 @@ export default defineConfig({
 		},
 		{
 			name: "Document",
-			path: "document",
-			component: "./Document/index.tsx",
+			path: "/document",
+			component: "./Document/DocumentPage.tsx",
+			routes: [
+				{
+					name: "Create a document",
+					path: "/document/creation",
+					component: "./Document/DocumentCreatePage.tsx",
+					hideInMenu: true,
+				},
+			],
 		},
 		{
 			name: "Administration",
