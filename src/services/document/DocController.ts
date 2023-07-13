@@ -23,4 +23,18 @@ const queryDocList = async (
 	});
 };
 
-export { queryDocList };
+const createDocument = async (
+	body: Doc.Create_Document_Request,
+	options?: { [key: string]: any }
+) => {
+	return request<Doc.Create_Document_Response>("/debug/create", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		data: body,
+		...(options || {}),
+	});
+};
+
+export { queryDocList, createDocument };

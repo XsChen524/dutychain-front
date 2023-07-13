@@ -39,6 +39,14 @@ export default defineConfig({
 					path: "/document/creation",
 					component: "./Document/DocumentCreatePage.tsx",
 					hideInMenu: true,
+					routes: [
+						{
+							name: "Result",
+							path: "/document/creation/:id/result",
+							component: "./Document/ResultPage.tsx",
+							hideInMenu: true,
+						},
+					],
 				},
 			],
 		},

@@ -18,7 +18,7 @@ declare namespace Doc {
 	export type Document = {
 		key: number;
 		record: {
-			id: number;
+			id: string;
 			type: string;
 			data: any;
 		};
@@ -39,7 +39,7 @@ declare namespace Doc {
 		key: number;
 		type: string;
 		data: string;
-		id: number;
+		id: string;
 	};
 
 	export type Document_List_Query_Params = {
@@ -58,5 +58,11 @@ declare namespace Doc {
 		data: string; // The stringfied contract
 		org: number;
 		walletId: string;
+	};
+
+	export type Create_Document_Response = {
+		id: string;
+		type: string;
+		data: string;
 	};
 }

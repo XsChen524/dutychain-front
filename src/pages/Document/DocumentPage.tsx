@@ -3,6 +3,7 @@ import services from '@/services/document';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { Outlet, connect, history, useLocation } from '@umijs/max';
+import { SearchOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 
 const { queryDocList } = services.DocController;
@@ -32,7 +33,18 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		valueType: 'text',
 		ellipsis: true,
 		width: '60%'
-	}
+	},
+	{
+		title: 'Detail',
+		dataIndex: 'id',
+		valueType: 'text',
+		width: '10%',
+		hideInSearch: true,
+		render: (id) => {
+			const path = '/idea/detail/' + id;
+			return <Button type='primary' shape="circle" icon={<SearchOutlined />} onClick={() => history.push(path)} />;
+		}
+	},
 ];
 
 const onClickCreate = () => {
