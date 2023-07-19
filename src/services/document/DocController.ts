@@ -27,7 +27,7 @@ const createDocument = async (
 	body: Doc.Create_Document_Request,
 	options?: { [key: string]: any }
 ) => {
-	return request<Doc.Create_Document_Response>("/debug/create", {
+	return request<Doc.Create_Document_Response>("/document", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

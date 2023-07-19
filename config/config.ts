@@ -33,6 +33,7 @@ export default defineConfig({
 			name: "Document",
 			path: "/document",
 			component: "./Document/DocumentPage.tsx",
+			access: "isLoggedIn",
 			routes: [
 				{
 					name: "Create a document",

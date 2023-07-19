@@ -54,14 +54,12 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 					operatorName: formData.operatorName,
 				})
 			};
-			console.log(body);
-			const document = await createDocument(body);
+			const { success, data } = await createDocument(body);
 			history.push(
 				`/document/creation/${body.id}/result`,
 				{
-					success: true,
-					data: document,
-					msg: "Create successfully",
+					success,
+					data,
 					time: moment().format()
 				}
 			);

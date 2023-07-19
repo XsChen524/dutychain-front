@@ -61,8 +61,7 @@ declare namespace Doc {
 	};
 
 	export type Create_Document_Response = {
-		id: string;
-		type: string;
-		data: string;
+		success: boolean;
+		data: Document | undefined;
 	};
 }

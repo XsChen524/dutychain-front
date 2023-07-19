@@ -13,7 +13,7 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		title: 'Document Key',
 		dataIndex: 'key',
 		valueType: 'text',
-		width: '10%'
+		width: '12%'
 	},
 	{
 		title: 'Document Type',
@@ -25,14 +25,14 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		title: 'ID',
 		dataIndex: 'id',
 		valueType: 'text',
-		width: '10%'
+		width: '12%',
+		copyable: true,
 	},
 	{
 		title: 'Data',
 		dataIndex: 'data',
 		valueType: 'text',
 		ellipsis: true,
-		width: '60%'
 	},
 	{
 		title: 'Detail',
@@ -40,9 +40,11 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		valueType: 'text',
 		width: '10%',
 		hideInSearch: true,
-		render: (id) => {
+		render: (id, record) => {
 			const path = '/idea/detail/' + id;
-			return <Button type='primary' shape="circle" icon={<SearchOutlined />} onClick={() => history.push(path)} />;
+			if (record.type === 'contract' || record.type === 'Contract') {
+				return <Button type='primary' shape="circle" icon={<SearchOutlined />} onClick={() => history.push(path)} />;
+			}
 		}
 	},
 ];
