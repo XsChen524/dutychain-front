@@ -6,6 +6,6 @@ export default defineConfig({
 			NODE_ENV: "prod",
 			UMI_ENV: "prod",
 		},
-		GLOBAL_HOST: "https://middle.tracechain.top",
+		GLOBAL_HOST: "https://api.tracechain.top",
 	},
 });
