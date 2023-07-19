@@ -2,7 +2,7 @@ import { Button, Descriptions } from 'antd';
 import { PageContainer } from '@ant-design/pro-components';
 import { connect } from '@umijs/max';
 
-const ProfilePage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = (props) => {
+const ProfilePage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) => {
 
 	const { user } = props;
 
@@ -32,7 +32,7 @@ const ProfilePage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch }> = 
 	);
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
 	return { user: state.user.user };
 };
 

@@ -25,7 +25,7 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		title: 'ID',
 		dataIndex: 'id',
 		valueType: 'text',
-		width: '12%',
+		width: '15%',
 		copyable: true,
 	},
 	{
@@ -41,9 +41,16 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		width: '10%',
 		hideInSearch: true,
 		render: (id, record) => {
-			const path = '/idea/detail/' + id;
+			const path = '/document/' + id;
 			if (record.type === 'contract' || record.type === 'Contract') {
-				return <Button type='primary' shape="circle" icon={<SearchOutlined />} onClick={() => history.push(path)} />;
+				return <Button
+					type='primary'
+					shape="circle"
+					icon={<SearchOutlined />}
+					onClick={() => {
+						history.push(path, { record });
+					}}
+				/>;
 			}
 		}
 	},
@@ -95,7 +102,6 @@ const DocumentPage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) =
 							]}
 							request={async (params /*, sort, filter */) => {
 								const { data, success } = await queryDocList(params);
-								console.log(data);
 								return {
 									success: !!(success),
 									data: parseTableEntity(data),

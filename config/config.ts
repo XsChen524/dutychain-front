@@ -49,6 +49,12 @@ export default defineConfig({
 						},
 					],
 				},
+				{
+					name: "Contract detail",
+					path: "/document/:id",
+					component: "./Document/DocumentDetailPage.tsx",
+					hideInMenu: true,
+				},
 			],
 		},
 		{
