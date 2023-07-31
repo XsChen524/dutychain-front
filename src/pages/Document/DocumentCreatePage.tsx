@@ -3,7 +3,7 @@ import moment from 'moment';
 import services from '@/services/document';
 import { Col, Row, Space } from "antd";
 import { Outlet } from '@umijs/max';
-import { PageContainer, ProForm, ProFormDigit, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
+import { PageContainer, ProForm, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
 import { connect, history, useLocation } from "@umijs/max";
 import { useEffect, useState } from "react";
 
