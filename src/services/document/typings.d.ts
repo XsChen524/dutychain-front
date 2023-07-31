@@ -27,9 +27,9 @@ declare namespace Doc {
 	export type Contract_Document = {
 		id: string;
 		type: "Contract" | string;
-		fromOrg: number;
-		toOrg: number;
-		operatorOrg: number;
+		fromOrg: string;
+		toOrg: string;
+		operatorOrg: string;
 		operatorName: string;
 		title: string;
 		description: string;
@@ -44,7 +44,7 @@ declare namespace Doc {
 
 	export type Document_List_Query_Params = {
 		walletId: string;
-		organizationId: number;
+		organizationId: string;
 	};
 
 	export type Document_List_Query_Response = {
@@ -56,7 +56,7 @@ declare namespace Doc {
 		id: string; // transactionId, to be a random Hex
 		type: string; // 'Contract' | string
 		data: string; // The stringfied contract
-		org: number;
+		org: string;
 		walletId: string;
 	};
 

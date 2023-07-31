@@ -6,6 +6,6 @@ export default defineConfig({
 			NODE_ENV: "dev",
 			UMI_ENV: "dev",
 		},
-		GLOBAL_HOST: "http://localhost:7010",
+		GLOBAL_HOST: "http://localhost:7011",
 	},
 });

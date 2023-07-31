@@ -84,7 +84,7 @@ const DocumentPage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) =
 	const actionRef = useRef<ActionType>();
 
 	useEffect(() => {
-		if (user) setParams({ ...user });
+		if (user) setParams({ ...user, organizationId: user.organization });
 	}, [user]);
 
 	return (

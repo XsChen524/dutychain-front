@@ -29,7 +29,7 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 	const [initialForm, setInitialForm] = useState<{
 		id: string;
 		type: string;
-		operatorOrg: number,
+		operatorOrg: string,
 		operatorName: string,
 	} | undefined>(undefined);
 
@@ -70,7 +70,7 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 		if (user) setInitialForm({
 			id: randomString(12),
 			type: 'Contract',
-			operatorOrg: user.organizationId,
+			operatorOrg: user.organization,
 			operatorName: user.name,
 		});
 	}, [user]);
@@ -97,22 +97,24 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 							}}
 							onFinish={onFinish}
 						>
-							<ProFormDigit
+							<ProFormText
 								width="md"
 								name="fromOrg"
 								label='Transfer from organization'
 								dataFormat={undefined}
 								rules={[{
 									required: true,
+									type: 'string',
 								}]}
 							/>
-							<ProFormDigit
+							<ProFormText
 								width="md"
 								name="toOrg"
 								label='Transfer to organization'
 								dataFormat={undefined}
 								rules={[{
 									required: true,
+									type: 'string',
 								}]}
 							/>
 							<ProFormText
@@ -154,9 +156,9 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 								width="md"
 								name="operatorOrg"
 								label='Organization of operator'
-								placeholder={initialForm.operatorOrg.toString()}
+								placeholder={initialForm.operatorOrg}
 								rules={[{
-									type: 'number',
+									type: 'string',
 								}]}
 							/>
 							<ProFormText

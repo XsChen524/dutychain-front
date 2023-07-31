@@ -2,7 +2,6 @@
   "private": true,
   "author": "XsChen524 <43726972+XsChen524@users.noreply.github.com>",
   "scripts": {
-    "start": "npm run dev",
     "dev": "max dev",
     "build:dev": "cross-env UMI_ENV=dev max build",
     "build:prod": "cross-env UMI_ENV=prod max build",
