@@ -27,8 +27,6 @@ declare namespace Doc {
 	export type Contract_Document = {
 		id: string;
 		type: "Contract" | string;
-		fromOrg: string;
-		toOrg: string;
 		operatorOrg: string;
 		operatorName: string;
 		title: string;

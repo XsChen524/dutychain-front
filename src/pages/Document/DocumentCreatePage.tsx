@@ -48,8 +48,10 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 				data: JSON.stringify({
 					title: formData.title,
 					description: formData.description,
+					/*
 					fromOrg: formData.fromOrg,
 					toOrg: formData.toOrg,
+					*/
 					operatorOrg: formData.operatorOrg,
 					operatorName: formData.operatorName,
 				})
@@ -97,26 +99,6 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 							}}
 							onFinish={onFinish}
 						>
-							<ProFormText
-								width="md"
-								name="fromOrg"
-								label='Transfer from organization'
-								dataFormat={undefined}
-								rules={[{
-									required: true,
-									type: 'string',
-								}]}
-							/>
-							<ProFormText
-								width="md"
-								name="toOrg"
-								label='Transfer to organization'
-								dataFormat={undefined}
-								rules={[{
-									required: true,
-									type: 'string',
-								}]}
-							/>
 							<ProFormText
 								width="md"
 								name="title"
@@ -182,3 +164,26 @@ const mapStateToProps = (state: { user: Auth.UserState }) => {
 };
 
 export default connect(mapStateToProps)(DocumentCreatePage);
+
+/*
+	<ProFormText
+		width="md"
+		name="fromOrg"
+		label='Transfer from organization'
+		dataFormat={undefined}
+		rules={[{
+			required: true,
+			type: 'string',
+		}]}
+	/>
+	<ProFormText
+		width="md"
+		name="toOrg"
+		label='Transfer to organization'
+		dataFormat={undefined}
+		rules={[{
+			required: true,
+			type: 'string',
+		}]}
+	/>
+*/

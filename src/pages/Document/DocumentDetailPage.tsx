@@ -32,8 +32,6 @@ const DocumentDetailPage: React.FC = () => {
 						<ProDescriptions.Item label='Type'>{contract.type}</ProDescriptions.Item>
 						<ProDescriptions.Item label='Title'>{contract.title}</ProDescriptions.Item>
 						<ProDescriptions.Item label='Description'>{contract.description}</ProDescriptions.Item>
-						<ProDescriptions.Item label='Sender'>Organization {contract.fromOrg}</ProDescriptions.Item>
-						<ProDescriptions.Item label='Receiver'>Organization {contract.toOrg}</ProDescriptions.Item>
 						<ProDescriptions.Item label='Operator'>{contract.operatorName}</ProDescriptions.Item>
 						<ProDescriptions.Item label='Operator Organization'>Organization {contract.operatorOrg}</ProDescriptions.Item>
 					</ProDescriptions>

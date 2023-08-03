@@ -2,12 +2,15 @@ import { Button, Descriptions } from 'antd';
 import { PageContainer } from '@ant-design/pro-components';
 import { connect } from '@umijs/max';
 
-const ProfilePage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) => {
+const ProfilePage: React.FunctionComponent<{ user: Auth.UserInfo, dispatch: any }> = (props) => {
 
-	const { user } = props;
+	const { user, dispatch } = props;
 
 	const onClickLogout = () => {
-		console.log(user);
+		dispatch({
+			type: 'user/logout',
+		});
+		window.location.replace('/');
 	};
 
 	return (
