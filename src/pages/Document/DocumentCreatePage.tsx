@@ -1,24 +1,12 @@
-import crypto from 'crypto';
 import moment from 'moment';
 import services from '@/services/document';
 import { Col, Row, Space } from "antd";
 import { Outlet } from '@umijs/max';
 import { PageContainer, ProForm, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
 import { connect, history, useLocation } from "@umijs/max";
-import { useEffect, useState } from "react";
 
 const { createDocument } = services.DocController;
 
-const randomString = (len: number): string => {
-	if (!Number.isFinite(len)) {
-		throw new TypeError("Expected a finite number");
-	}
-
-	return crypto
-		.randomBytes(Math.ceil(len / 2))
-		.toString("hex")
-		.slice(0, len);
-};
 
 const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefined }> = (props) => {
 
@@ -26,48 +14,37 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 
 	const pathname = useLocation().pathname;
 
+	/*
 	const [initialForm, setInitialForm] = useState<{
 		id: string;
 		type: string;
 		operatorOrg: string,
 		operatorName: string,
 	} | undefined>(undefined);
+	*/
 
 	const formItemLayout = {
 		labelCol: { span: 8 },
 		wrapperCol: { span: 14 },
 	};
 
-	const onFinish = async (formData: Doc.Contract_Document): Promise<boolean | void> => {
+	const onFinish = async (formData: Doc.Create_Document_Request): Promise<boolean | void> => {
 		if (user) {
-			const body: Doc.Create_Document_Request = {
-				id: formData.id,
-				type: formData.type,
-				org: formData.operatorOrg,
-				walletId: user.walletId,
-				data: JSON.stringify({
-					title: formData.title,
-					description: formData.description,
-					/*
-					fromOrg: formData.fromOrg,
-					toOrg: formData.toOrg,
-					*/
-					operatorOrg: formData.operatorOrg,
-					operatorName: formData.operatorName,
-				})
-			};
-			const { success, data } = await createDocument(body);
-			history.push(
-				`/document/creation/${body.id}/result`,
-				{
-					success,
-					data,
-					time: moment().format()
-				}
-			);
+			const { success, data } = await createDocument(formData, user.token);
+			if (data) {
+				history.push(
+					`/document/creation/${data.id}/result`,
+					{
+						success,
+						data,
+						time: moment().format()
+					}
+				);
+			}
 		}
 	};
 
+	/*
 	useEffect(() => {
 		if (user) setInitialForm({
 			id: randomString(12),
@@ -76,40 +53,85 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 			operatorName: user.name,
 		});
 	}, [user]);
+	*/
 
 	return (
 		<>
 			{pathname !== '/document/creation' ? <Outlet /> :
 				<PageContainer ghost title={"Create a document"}>
-					{initialForm ?
-						<ProForm<Doc.Contract_Document>
-							{...formItemLayout}
-							initialValues={initialForm}
-							layout={'horizontal'}
-							submitter={{
-								render: (props, doms) => {
-									return (
-										<Row>
-											<Col span={14} offset={8}>
-												<Space>{doms}</Space>
-											</Col>
-										</Row>
-									);
-								}
-							}}
-							onFinish={onFinish}
-						>
-							<ProFormText
-								width="md"
-								name="title"
-								label='Title'
-								rules={[{
-									required: true,
-									type: 'string',
-									whitespace: true,
-								}]}
-							/>
-							<ProFormTextArea
+					<ProForm<Doc.Document>
+						{...formItemLayout}
+						layout={'horizontal'}
+						submitter={{
+							render: (props, doms) => {
+								return (
+									<Row>
+										<Col span={14} offset={8}>
+											<Space>{doms}</Space>
+										</Col>
+									</Row>
+								);
+							}
+						}}
+						onFinish={onFinish}
+					>
+						<ProFormText
+							width="md"
+							name="title"
+							label='Title'
+							rules={[{
+								required: true,
+								type: 'string',
+								whitespace: true,
+							}]}
+						/>
+						<ProFormTextArea
+							width="md"
+							name="data"
+							label='Data'
+							rules={[{
+								required: true,
+								type: 'string',
+								whitespace: true,
+							}]}
+						/>
+					</ProForm>
+				</PageContainer>
+			}
+		</>
+	);
+};
+
+const mapStateToProps = (state: { user: Auth.UserState }) => {
+	const user: Auth.UserInfo | undefined = state.user.user;
+	return { user };
+};
+
+export default connect(mapStateToProps)(DocumentCreatePage);
+
+/*
+	<ProFormText
+		width="md"
+		name="fromOrg"
+		label='Transfer from organization'
+		dataFormat={undefined}
+		rules={[{
+			required: true,
+			type: 'string',
+		}]}
+	/>
+	<ProFormText
+		width="md"
+		name="toOrg"
+		label='Transfer to organization'
+		dataFormat={undefined}
+		rules={[{
+			required: true,
+			type: 'string',
+		}]}
+	/>
+
+								<ProFormTextArea
 								width="md"
 								name="description"
 								label='Description'
@@ -150,40 +172,4 @@ const DocumentCreatePage: React.FunctionComponent<{ user: Auth.UserInfo | undefi
 								label='Operator Name'
 								placeholder={initialForm.operatorName}
 							/>
-						</ProForm>
-						: null}
-				</PageContainer>
-			}
-		</>
-	);
-};
-
-const mapStateToProps = (state: { user: Auth.UserState }) => {
-	const user: Auth.UserInfo | undefined = state.user.user;
-	return { user };
-};
-
-export default connect(mapStateToProps)(DocumentCreatePage);
-
-/*
-	<ProFormText
-		width="md"
-		name="fromOrg"
-		label='Transfer from organization'
-		dataFormat={undefined}
-		rules={[{
-			required: true,
-			type: 'string',
-		}]}
-	/>
-	<ProFormText
-		width="md"
-		name="toOrg"
-		label='Transfer to organization'
-		dataFormat={undefined}
-		rules={[{
-			required: true,
-			type: 'string',
-		}]}
-	/>
 */

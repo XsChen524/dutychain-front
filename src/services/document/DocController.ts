@@ -17,6 +17,7 @@ const queryDocList = async (
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
+			// Authorization: "Bearer " + jwt,
 		},
 		params,
 		...(options || {}),
@@ -25,16 +26,51 @@ const queryDocList = async (
 
 const createDocument = async (
 	body: Doc.Create_Document_Request,
+	jwt: string,
 	options?: { [key: string]: any }
 ) => {
 	return request<Doc.Create_Document_Response>("/document", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: "Bearer " + jwt,
 		},
 		data: body,
 		...(options || {}),
 	});
 };
 
-export { queryDocList, createDocument };
+const queryDocDetail = async (
+	documentId: string,
+	// jwt: string,
+	options?: { [key: string]: any }
+) => {
+	return request<Doc.Document_Detail_Query_Response>(
+		`/document/${documentId}`,
+		{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				// Authorization: "Bearer " + jwt,
+			},
+			...(options || {}),
+		}
+	);
+};
+
+const validateDoc = async (
+	documentId: string,
+	jwt: string,
+	options?: { [key: string]: any }
+) => {
+	return request<Doc.Validate_Response>(`/validate/${documentId}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer " + jwt,
+		},
+		...(options || {}),
+	});
+};
+
+export { queryDocList, createDocument, queryDocDetail, validateDoc };

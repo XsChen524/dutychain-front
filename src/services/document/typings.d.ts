@@ -6,24 +6,16 @@ declare namespace Doc {
 		toVendor: number;
 		content: string;
 	};
-
-	export type DocInfo = {
-		id: string;
-		title: string;
-		data: DocInfo_Data_Contract;
-		vendorId: string;
-	};
 	*/
 
 	export type Document = {
-		key: number;
-		record: {
-			id: string;
-			type: string;
-			data: any;
-		};
+		id: string;
+		title: string;
+		data: string;
+		vendorId: number;
 	};
 
+	/*
 	export type Contract_Document = {
 		id: string;
 		type: "Contract" | string;
@@ -32,17 +24,17 @@ declare namespace Doc {
 		title: string;
 		description: string;
 	};
+	*/
 
 	export type Document_Table_Entity = {
-		key: number;
-		type: string;
-		data: string;
 		id: string;
+		title: string;
+		data: string;
+		vendorId: number;
 	};
 
 	export type Document_List_Query_Params = {
-		walletId: string;
-		organizationId: string;
+		vendorId: number;
 	};
 
 	export type Document_List_Query_Response = {
@@ -50,16 +42,23 @@ declare namespace Doc {
 		data?: Document[];
 	};
 
+	export type Document_Detail_Query_Response = {
+		success: boolean;
+		data?: Document[];
+	};
+
 	export type Create_Document_Request = {
-		id: string; // transactionId, to be a random Hex
-		type: string; // 'Contract' | string
-		data: string; // The stringfied contract
-		org: string;
-		walletId: string;
+		title: string;
+		data: string;
 	};
 
 	export type Create_Document_Response = {
 		success: boolean;
 		data: Document | undefined;
+	};
+
+	export type Validate_Response = {
+		success: boolean;
+		data: undefined | string;
 	};
 }

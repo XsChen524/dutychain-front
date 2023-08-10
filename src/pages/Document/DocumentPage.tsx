@@ -10,22 +10,17 @@ const { queryDocList } = services.DocController;
 
 const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 	{
-		title: 'Document Key',
-		dataIndex: 'key',
-		valueType: 'text',
-		width: '12%'
-	},
-	{
-		title: 'Document Type',
-		dataIndex: 'type',
-		valueType: 'text',
-		width: '10%'
-	},
-	{
 		title: 'ID',
 		dataIndex: 'id',
 		valueType: 'text',
-		width: '15%',
+		width: '20%',
+		copyable: true,
+	},
+	{
+		title: 'Title',
+		dataIndex: 'title',
+		valueType: 'text',
+		width: '20%',
 		copyable: true,
 	},
 	{
@@ -40,18 +35,15 @@ const columns: ProColumns<Doc.Document_Table_Entity>[] = [
 		valueType: 'text',
 		width: '10%',
 		hideInSearch: true,
-		render: (id, record) => {
-			const path = '/document/' + id;
-			if (record.type === 'contract' || record.type === 'Contract') {
-				return <Button
-					type='primary'
-					shape="circle"
-					icon={<SearchOutlined />}
-					onClick={() => {
-						history.push(path, { record });
-					}}
-				/>;
-			}
+		render: (id) => {
+			return <Button
+				type='primary'
+				shape="circle"
+				icon={<SearchOutlined />}
+				onClick={() => {
+					history.push(`/document/${id}`);
+				}}
+			/>;
 		}
 	},
 ];
@@ -60,6 +52,7 @@ const onClickCreate = () => {
 	history.push('/document/creation');
 };
 
+/*
 const parseTableEntity = (data: Doc.Document[] | undefined): Doc.Document_Table_Entity[] => {
 	const documentTableEntities: Doc.Document_Table_Entity[] = [];
 	if (data) {
@@ -74,6 +67,7 @@ const parseTableEntity = (data: Doc.Document[] | undefined): Doc.Document_Table_
 	}
 	return documentTableEntities;
 };
+*/
 
 const DocumentPage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) => {
 
@@ -84,7 +78,7 @@ const DocumentPage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) =
 	const actionRef = useRef<ActionType>();
 
 	useEffect(() => {
-		if (user) setParams({ ...user, organizationId: user.organization });
+		if (user) setParams({ vendorId: user.id });
 	}, [user]);
 
 	return (
@@ -92,10 +86,10 @@ const DocumentPage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) =
 			{
 				pathname === '/document'
 					? <PageContainer ghost title={"Document"}>
-						<ProTable<Doc.Document_Table_Entity, Doc.Document_List_Query_Params>
+						<ProTable<Doc.Document, Doc.Document_List_Query_Params>
 							actionRef={actionRef}
 							params={params}
-							rowKey="key"
+							rowKey="id"
 							search={false}
 							toolBarRender={() => [
 								<Button key="1" type="primary" onClick={onClickCreate} > Create </Button>,
@@ -104,7 +98,7 @@ const DocumentPage: React.FunctionComponent<{ user: Auth.UserInfo }> = (props) =
 								const { data, success } = await queryDocList(params);
 								return {
 									success: !!(success),
-									data: parseTableEntity(data),
+									data,
 									total: data?.length || 0,
 								};
 							}}
